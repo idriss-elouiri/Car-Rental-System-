@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { connectDb } from "./config/db.js";
 import authRouter from "./modules/auth/auth.route.js";
+import customerRouter from "./modules/customer/customer.route.js";
 import dotenv from "dotenv";
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(
 );
 
 app.use("/api/auth", authRouter);
+app.use("/api/customer", customerRouter);
 
 app.get("/*", (req, res) => {
   res.json("hello world");
