@@ -53,3 +53,35 @@ export const getCustomers = async (req, res, next) => {
       next(error);
     }
   };
+
+  export const editCustomer = async (req, res, next) => {
+    try {
+      const updatedCustomer = await Customer.findByIdAndUpdate(
+        req.params.customerId,
+        { $set: { ...req.body } }, // Use spread operator for flexibility
+        { new: true, runValidators: true } // Ensures validation on update
+      );
+  
+      if (!updatedCustomer) {
+        return next(errorHandler(404, 'customer not found'));
+      }
+      
+      res.status(200).json(updatedCustomer);
+    } catch (error) {
+      console.error("Error updating customer:", error); // Log error for debugging
+      next(error);
+    }
+  };
+  
+  export const getCustomer = async (req, res, next) => {
+    try {
+      const customer = await Customer.findById(req.params.customerId);
+      if (!customer) {
+        return next(errorHandler(404, 'customer not found'));
+      }
+      res.status(200).json(customer);
+    } catch (error) {
+      console.error("Error fetching customer:", error); // Log error for debugging
+      next(error);
+    }
+  };
