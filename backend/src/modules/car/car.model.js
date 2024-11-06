@@ -13,7 +13,7 @@ const carSchema = new mongoose.Schema(
     color: {
       type: String,
       required: true,
-    },
+    },  
     vehicleYear: {
       type: String,
       required: true,
@@ -25,7 +25,7 @@ const carSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+  
 const Car = mongoose.model("Car", carSchema);
 
 export default Car;

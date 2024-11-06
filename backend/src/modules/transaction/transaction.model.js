@@ -6,7 +6,7 @@ const transactionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    transactionName: {
+    carName: {
       type: String,
       required: true,
     },
@@ -18,7 +18,7 @@ const transactionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    perDayPirce: {
+    perDayPrice: {
       type: String,
       required: true,
     },
@@ -26,8 +26,17 @@ const transactionSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    totalPenalty: {
+      type: Number,
+      default: 0,
+    },
     dateOfReturn: {
       type: String,
+      default: "--",
+    },
+    isCompleted: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

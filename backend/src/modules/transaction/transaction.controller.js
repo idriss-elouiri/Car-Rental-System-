@@ -1,3 +1,4 @@
+import { errorHandler } from "../../utils/error.js";
 import Transaction from "./transaction.model.js";
 
 export const createTransaction = async (req, res, next) => {
@@ -77,7 +78,7 @@ export const editTransaction = async (req, res, next) => {
 
 export const getTransaction = async (req, res, next) => {
   try {
-    const transaction = await Transaction.findById(req.params.carId);
+    const transaction = await Transaction.findById(req.params.transactionId);
     if (!transaction) {
       return next(errorHandler(404, "transaction not found"));
     }
