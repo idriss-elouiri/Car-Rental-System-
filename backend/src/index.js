@@ -4,6 +4,7 @@ import { connectDb } from "./config/db.js";
 import authRouter from "./modules/auth/auth.route.js";
 import customerRouter from "./modules/customer/customer.route.js";
 import carRouter from "./modules/car/car.route.js";
+import transactionRouter from "./modules/transaction/transaction.route.js";
 import dotenv from "dotenv";
 
 const app = express();
@@ -24,6 +25,7 @@ app.use(
 app.use("/api/auth", authRouter);
 app.use("/api/customer", customerRouter);
 app.use("/api/car", carRouter);
+app.use("/api/transaction", transactionRouter);
 
 app.get("/*", (req, res) => {
   res.json("hello world");
