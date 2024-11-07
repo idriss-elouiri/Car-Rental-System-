@@ -1,12 +1,23 @@
 import { errorHandler } from "../../utils/error.js";
+import Car from "../car/car.model.js";
 import Transaction from "./transaction.model.js";
 
 export const createTransaction = async (req, res, next) => {
-  const newTransaction = new Transaction({
-    ...req.body,
-  });
-
   try {
+    const car = await Car.findOne({ name: req.body.carName });
+    if (!car || car.carStatus === "Not Available") {
+      return res.status(400).json({ message: "السيارة غير متاحة" });
+    }
+    console.log(car);
+    car.carStatus = "Not Available";
+    await car.save();
+    console.log(car);
+
+    const newTransaction = new Transaction({
+      rentalDate: new Date(),
+      ...req.body,
+    });
+
     const savedTransaction = await newTransaction.save();
     res.status(201).json(savedTransaction);
   } catch (error) {
@@ -45,7 +56,7 @@ export const getTransactions = async (req, res, next) => {
 export const deleteTransaction = async (req, res, next) => {
   try {
     const deletedTransaction = await Transaction.findByIdAndDelete(
-      req.params.carId
+      req.params.transactionId
     );
     if (!deletedTransaction) {
       return next(errorHandler(404, "Transaction not found"));
@@ -59,19 +70,33 @@ export const deleteTransaction = async (req, res, next) => {
 
 export const editTransaction = async (req, res, next) => {
   try {
+    // Update the transaction
     const updatedTransaction = await Transaction.findByIdAndUpdate(
       req.params.transactionId,
-      { $set: { ...req.body } }, // Use spread operator for flexibility
-      { new: true, runValidators: true } // Ensures validation on update
+      { $set: { ...req.body } },
+      { new: true, runValidators: true } // Ensure validation is applied on update
     );
 
     if (!updatedTransaction) {
       return next(errorHandler(404, "Transaction not found"));
     }
 
+    // Check if the transaction is marked as completed
+    if (req.body.isCompleted && req.body.carName) {
+      const car = await Car.findOne({ name: req.body.carName });
+
+      if (car && car.carStatus === "Not Available") {
+        // Change car status to Available if the transaction is completed
+        car.carStatus = "Available";
+        await car.save();
+        console.log("Car status updated to Available");
+      }
+    }
+
+    // Return the updated transaction
     res.status(200).json(updatedTransaction);
   } catch (error) {
-    console.error("Error updating transaction:", error); // Log error for debugging
+    console.error("Error updating transaction:", error);
     next(error);
   }
 };

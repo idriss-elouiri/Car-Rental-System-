@@ -5,9 +5,19 @@ import { validateZod } from "../../middleware/validate-zod.js";
 
 const router = express.Router();
 
-router.post("/createTransaction", validateZod(transactionShcema), transactionController.createTransaction);
+router.post(
+  "/createTransaction",
+  validateZod(transactionShcema),
+  transactionController.createTransaction
+);
 router.get("/getTransactions", transactionController.getTransactions);
-router.delete("/deleteTransaction/:transactionId", transactionController.deleteTransaction);
-router.put('/editTransaction/:transactionId', transactionController.editTransaction)
-router.get('/:transactionId', transactionController.getTransaction);
+router.delete(
+  "/deleteTransaction/:transactionId",
+  transactionController.deleteTransaction
+);
+router.put(
+  "/editTransaction/:transactionId",
+  transactionController.editTransaction
+);
+router.get("/:transactionId", transactionController.getTransaction);
 export default router;

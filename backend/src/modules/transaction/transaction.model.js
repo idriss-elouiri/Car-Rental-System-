@@ -10,6 +10,10 @@ const transactionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    rentalDate: {
+      type: String,
+      required: true,
+    },
     borrowDate: {
       type: String,
       required: true,
