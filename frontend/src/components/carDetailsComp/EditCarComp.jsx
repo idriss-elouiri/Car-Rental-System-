@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import FormCar from "./FormCar";
+import FormCar from "./FormCar"; // Assuming this is your car form component
 
 const EditCarComp = () => {
   const { id } = useParams();
@@ -34,8 +34,15 @@ const EditCarComp = () => {
     }
   }, [id, apiUrl]);
 
-  if (loading) return <p className="text-center">Loading...</p>; // Consider adding a spinner here
-  if (error)
+  if (loading) {
+    return (
+      <div className="text-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
     return (
       <div className="text-red-500 text-center">
         <p>Error: {error}</p>
@@ -47,11 +54,12 @@ const EditCarComp = () => {
         </button>
       </div>
     );
+  }
 
   return editCar ? (
-    <FormCar {...editCar} />
+    <FormCar {...editCar} /> // Assuming FormCar is set up to handle these props
   ) : (
-    <p className="text-center">No editCar data available</p>
+    <p className="text-center">No car data available</p> // In case the car with the given ID doesn't exist
   );
 };
 

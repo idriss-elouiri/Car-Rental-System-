@@ -1,10 +1,12 @@
-import EditCarComp from '@/components/carDetailsComp/EditCarComp'
-import React from 'react'
+import EditCarComp from "@/components/carDetailsComp/EditCarComp";
+import React from "react";
 
 const EditCar = () => {
   return (
-    <><EditCarComp/></>
-  )
-}
+    <>
+      <EditCarComp />
+    </>
+  );
+};
 
-export default EditCar
+export default EditCar;

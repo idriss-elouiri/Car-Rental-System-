@@ -1,10 +1,12 @@
-import EditTransactionComp from '@/components/transactionDataComp/EditTransactionComp'
-import React from 'react'
+import EditTransactionComp from "@/components/transactionDataComp/EditTransactionComp";
+import React from "react";
 
 const EditTransaction = () => {
   return (
-    <><EditTransactionComp/></>
-  )
-}
+    <>
+      <EditTransactionComp />
+    </>
+  );
+};
 
-export default EditTransaction
+export default EditTransaction;

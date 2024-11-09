@@ -1,10 +1,12 @@
-import EditCustomerComp from '@/components/customerDetailsComp/EditCustomerComp'
-import React from 'react'
+import EditCustomerComp from "@/components/customerDetailsComp/EditCustomerComp";
+import React from "react";
 
 const EditCustomer = () => {
   return (
-    <><EditCustomerComp/></>
-  )
-}
+    <>
+      <EditCustomerComp />
+    </>
+  );
+};
 
-export default EditCustomer
+export default EditCustomer;
