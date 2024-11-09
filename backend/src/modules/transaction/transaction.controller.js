@@ -4,13 +4,16 @@ import Transaction from "./transaction.model.js";
 
 export const createTransaction = async (req, res, next) => {
   try {
+    console.log(req.body.carName);
     const car = await Car.findOne({ name: req.body.carName });
+
     if (!car || car.carStatus === "Not Available") {
       return res.status(400).json({ message: "السيارة غير متاحة" });
     }
     console.log(car);
     car.carStatus = "Not Available";
-    await car.save();
+    car.rentalCount += 1; // Increment the rental count
+    await car.save(); // Save the updated car info
     console.log(car);
 
     const newTransaction = new Transaction({
@@ -37,7 +40,6 @@ export const getTransactions = async (req, res, next) => {
 
     const totalTransactions = await Transaction.countDocuments();
 
-    // Get the count of Cars created in the last month
     const lastMonthTransactionsCount = await Transaction.countDocuments({
       createdAt: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
     });
@@ -103,13 +105,77 @@ export const editTransaction = async (req, res, next) => {
 
 export const getTransaction = async (req, res, next) => {
   try {
-    const transaction = await Transaction.findById(req.params.transactionId);
+    const { transactionId } = req.params;
+
+    if (transactionId === "sales-overview") {
+      // Call the sales overview function instead
+      return getSalesOverview(req, res);
+    }
+
+    // Proceed with the normal findById function if it's a valid ObjectId
+    const transaction = await Transaction.findById(transactionId);
     if (!transaction) {
-      return next(errorHandler(404, "transaction not found"));
+      return next(errorHandler(404, "Transaction not found"));
     }
     res.status(200).json(transaction);
   } catch (error) {
     console.error("Error fetching transaction:", error); // Log error for debugging
     next(error);
+  }
+};
+
+export const getSalesOverview = async (req, res) => {
+  try {
+    // Fetch all transactions
+    const transactions = await Transaction.find({});
+
+    // Calculate total revenue
+    const totalRevenue = transactions.reduce(
+      (sum, transaction) => sum + transaction.totalPrice,
+      0
+    );
+
+    // Calculate the total number of transactions
+    const totalTransactions = transactions.length;
+
+    // Prepare monthly overview data
+    const monthlyMap = {};
+
+    transactions.forEach(({ rentalDate, totalPrice }) => {
+      const date = new Date(rentalDate);
+      const monthYear = `${date.getMonth() + 1}-${date.getFullYear()}`; // Format "MM-YYYY"
+
+      if (!monthlyMap[monthYear]) {
+        monthlyMap[monthYear] = { totalRevenue: 0, date };
+      }
+      monthlyMap[monthYear].totalRevenue += totalPrice;
+    });
+
+    // Convert map to array, adding formatted date and month name
+    const monthlyOverview = Object.keys(monthlyMap)
+      .map((key) => {
+        const { totalRevenue, date } = monthlyMap[key];
+        const formattedDate = `${date.getDate()}/${
+          date.getMonth() + 1
+        }/${date.getFullYear()}`;
+        const monthName = date.toLocaleString("default", { month: "long" });
+
+        return {
+          _id: key, // This should not be an ObjectId, it's a string
+          totalRevenue,
+          monthName,
+          date: formattedDate,
+        };
+      })
+      .sort((a, b) => new Date(`01-${a._id}`) - new Date(`01-${b._id}`));
+
+    res.status(200).json({
+      totalTransactions,
+      totalRevenue,
+      monthlyOverview,
+    });
+  } catch (error) {
+    console.error("Error fetching sales overview:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };

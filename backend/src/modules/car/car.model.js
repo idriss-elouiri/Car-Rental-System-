@@ -18,6 +18,10 @@ const carSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    rentalCount: { 
+      type: Number,
+      default: 0,
+    },
     carStatus: {
       type: String,
       required: true,

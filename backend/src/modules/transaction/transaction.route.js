@@ -15,9 +15,11 @@ router.delete(
   "/deleteTransaction/:transactionId",
   transactionController.deleteTransaction
 );
+router.get("/:transactionId", transactionController.getTransaction);
 router.put(
   "/editTransaction/:transactionId",
   transactionController.editTransaction
 );
-router.get("/:transactionId", transactionController.getTransaction);
+router.get("/sales-overview", transactionController.getSalesOverview);
+
 export default router;

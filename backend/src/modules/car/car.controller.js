@@ -17,17 +17,15 @@ export const createCar = async (req, res, next) => {
 export const getCars = async (req, res, next) => {
   try {
     const startIndex = parseInt(req.query.startIndex, 10) || 0;
-    const sortDirection = req.query.sort === "asc" ? 1 : -1;
 
     const cars = await Car.find()
-      .sort({ createdAt: sortDirection })
+      .sort({ rentalCount: -1 }) // Sort by rental count, descending
       .skip(startIndex);
 
     const totalCars = await Car.countDocuments();
 
     const availableCars = await Car.countDocuments({ carStatus: "Available" });
 
-    // Get the count of Cars created in the last month
     const lastMonthCarsCount = await Car.countDocuments({
       createdAt: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
     });
