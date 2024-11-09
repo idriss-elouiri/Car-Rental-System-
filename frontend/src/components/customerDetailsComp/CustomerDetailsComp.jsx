@@ -48,7 +48,7 @@ const CustomerDetails = () => {
       }
     };
     fetchProducts();
-  }, []);
+  }, [apiUrl]);
 
   const handleDeleteCustomer = async () => {
     try {

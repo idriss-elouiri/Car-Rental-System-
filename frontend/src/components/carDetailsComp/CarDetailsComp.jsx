@@ -42,7 +42,7 @@ const CarDetails = () => {
       }
     };
     fetchCars();
-  }, []);
+  }, [apiUrl]);
 
   const handleDeleteCar = async () => {
     try {

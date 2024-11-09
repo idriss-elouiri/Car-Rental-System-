@@ -48,7 +48,7 @@ const TransactionDataComp = () => {
       }
     };
     fetchTransactions();
-  }, []);
+  }, [apiUrl]);
 
   const handleDeleteTransaction = async () => {
     try {
