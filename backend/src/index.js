@@ -6,8 +6,8 @@ import customerRouter from "./modules/customer/customer.route.js";
 import carRouter from "./modules/car/car.route.js";
 import transactionRouter from "./modules/transaction/transaction.route.js";
 import dotenv from "dotenv";
-import { createServer } from "@vercel/node";
 
+const port = process.env.PORT || 3006
 const app = express();
 dotenv.config();
 
@@ -32,11 +32,10 @@ app.get("/*", (req, res) => {
   res.json("hello world");
 });
 
-app.get("/api/test", (req, res) => {
-  res.json({ message: "Backend working!" });
+app.listen(port, () => {
+  console.log("Server is running on port 3006!");
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500; // Default to 500 if not set
   const message = err.message || "Internal Server Error"; // Default message
@@ -50,6 +49,3 @@ app.use((err, req, res, next) => {
     message,
   });
 });
-
-// Export the app as a serverless function
-export default createServer(app);
