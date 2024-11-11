@@ -1,7 +1,7 @@
-// next.config.mjs
 const nextConfig = {
   distDir: "build", // Custom build output directory
-  reactStrictMode: true, // Enable React Strict Mode for better error handling
+  reactStrictMode: true,
+  basePath: '/car-rental-system', // If you're using a subdirectory
   async redirects() {
     return [
       {
