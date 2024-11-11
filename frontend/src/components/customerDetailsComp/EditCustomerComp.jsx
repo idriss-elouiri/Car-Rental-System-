@@ -1,11 +1,9 @@
 "use client"; // Move this to the very top
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import FormCustomer from "./FormCustomer";
 
-const EditCustomerComp = () => {
-  const { id } = useParams();
+const EditCustomerComp = ({id}) => {
 
   const [editCustomer, setEditCustomer] = useState(null);
   const [loading, setLoading] = useState(true);

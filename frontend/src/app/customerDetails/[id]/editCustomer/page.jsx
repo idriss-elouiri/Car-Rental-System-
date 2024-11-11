@@ -1,10 +1,12 @@
 import EditCustomerComp from "@/components/customerDetailsComp/EditCustomerComp";
 import React from "react";
 
-const EditCustomer = () => {
+const EditCustomer = ({ params }) => {
+  const { id } = params;
+
   return (
     <>
-      <EditCustomerComp />
+      <EditCustomerComp id={id}/>
     </>
   );
 };

@@ -1,7 +1,7 @@
-/** @type {import('next').NextConfig} */
+// next.config.mjs
 const nextConfig = {
-  distDir: "build",
-  reactStrictMode: true,
+  distDir: "build", // Custom build output directory
+  reactStrictMode: true, // Enable React Strict Mode for better error handling
   async redirects() {
     return [
       {

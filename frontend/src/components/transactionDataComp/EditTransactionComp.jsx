@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import FormTransaction from "./FormTransaction";
 
-const EditTransactionComp = () => {
-  const { id } = useParams();
+const EditTransactionComp = ({id}) => {
   const [editTransaction, setEditTransaction] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

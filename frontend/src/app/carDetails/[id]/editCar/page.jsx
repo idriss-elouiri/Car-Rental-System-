@@ -1,10 +1,11 @@
 import EditCarComp from "@/components/carDetailsComp/EditCarComp";
 import React from "react";
 
-const EditCar = () => {
+const EditCar = ({ params }) => {
+  const { id } = params;
   return (
     <>
-      <EditCarComp />
+      <EditCarComp id={id} />
     </>
   );
 };

@@ -1,10 +1,11 @@
 import EditTransactionComp from "@/components/transactionDataComp/EditTransactionComp";
 import React from "react";
 
-const EditTransaction = () => {
+const EditTransaction = ({ params }) => {
+  const { id } = params;
   return (
     <>
-      <EditTransactionComp />
+      <EditTransactionComp id={id} />
     </>
   );
 };
