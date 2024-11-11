@@ -1,11 +1,12 @@
 "use client"; // Move this to the very top
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import FormCustomer from "./FormCustomer";
 
 const EditCustomerComp = () => {
-  const { id } = useRouter().query;
+  const { id } = useParams();
+
   const [editCustomer, setEditCustomer] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
