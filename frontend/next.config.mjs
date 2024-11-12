@@ -1,7 +1,6 @@
 const nextConfig = {
   distDir: "build", // Custom build output directory
   reactStrictMode: true,
-  basePath: '/car-rental-system', // If you're using a subdirectory
   async redirects() {
     return [
       {
