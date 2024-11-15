@@ -7,8 +7,9 @@ import { FaCar, FaEdit, FaSearch, FaTrash } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Header from "../Header";
+import Layout from "../Layout";
 
-const CarDetails = () => {
+const CarDetailsComp = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -93,7 +94,7 @@ const CarDetails = () => {
   }
 
   return (
-    <>
+    <Layout>
       <div className="flex-1 overflow-auto relative z-10">
         <Header title="Car Section" />
 
@@ -201,25 +202,25 @@ const CarDetails = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                         {car.carStatus}
                       </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                          <>
-                            <button
-                              className="text-indigo-400 hover:text-indigo-300 mr-2"
-                              onClick={() => handleEditClick(car._id)}
-                              >
-                              <FaEdit size={18} />
-                            </button>
-                            <button
-                              className="text-red-400 hover:text-red-300"
-                              onClick={() => {
-                                setShowModal(true);
-                                setCarIdToDelete(car._id);
-                              }}
-                            >
-                              <FaTrash size={18} />
-                            </button>
-                          </>
-                        </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                        <>
+                          <button
+                            className="text-indigo-400 hover:text-indigo-300 mr-2"
+                            onClick={() => handleEditClick(car._id)}
+                          >
+                            <FaEdit size={18} />
+                          </button>
+                          <button
+                            className="text-red-400 hover:text-red-300"
+                            onClick={() => {
+                              setShowModal(true);
+                              setCarIdToDelete(car._id);
+                            }}
+                          >
+                            <FaTrash size={18} />
+                          </button>
+                        </>
+                      </td>
                     </motion.tr>
                   ))}
                 </tbody>
@@ -275,8 +276,8 @@ const CarDetails = () => {
           </motion.div>
         </main>
       </div>
-    </>
+    </Layout>
   );
 };
 
-export default CarDetails;
+export default CarDetailsComp;

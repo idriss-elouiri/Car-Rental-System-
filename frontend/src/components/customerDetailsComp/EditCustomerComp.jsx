@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import FormCustomer from "./FormCustomer";
+import Layout from "../Layout";
 
-const EditCustomerComp = ({id}) => {
-
+const EditCustomerComp = ({ id }) => {
   const [editCustomer, setEditCustomer] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

@@ -1,10 +1,8 @@
-import FormCar from '@/components/carDetailsComp/FormCar'
-import React from 'react'
+import React from "react";
+import FormCar from "@/components/carDetailsComp/FormCar";
 
 const NewCar = () => {
-  return (
-    <><FormCar/></>
-  )
-}
+  return <FormCar />;
+};
 
-export default NewCar
+export default NewCar;

@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Cell } from "recharts";
-import { useEffect, useState } from "react";
 
 const COLORS = ["#6366F1", "#10B981"]; // Choose colors for bars
 

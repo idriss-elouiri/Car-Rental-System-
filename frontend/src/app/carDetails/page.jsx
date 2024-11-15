@@ -1,11 +1,8 @@
-import CarDetailsComp from '@/components/carDetailsComp/CarDetailsComp'
-import Layout from '@/components/Layout'
-import React from 'react'
+import React from "react";
+import CarDetailsComp from "@/components/carDetailsComp/CarDetailsComp";
 
-const CarDetails  = () => {
-  return (
-    <Layout><CarDetailsComp/></Layout>
-  )
-}
+const CarDetails = () => {
+  return <CarDetailsComp />;
+};
 
-export default CarDetails 
+export default CarDetails;

@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import FormTransaction from "./FormTransaction";
+import Layout from "../Layout";
 
-const EditTransactionComp = ({id}) => {
+const EditTransactionComp = ({ id }) => {
   const [editTransaction, setEditTransaction] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

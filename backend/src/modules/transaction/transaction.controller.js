@@ -8,7 +8,7 @@ export const createTransaction = async (req, res, next) => {
     const car = await Car.findOne({ name: req.body.carName });
 
     if (!car || car.carStatus === "Not Available") {
-      return res.status(400).json({ message: "السيارة غير متاحة" });
+      return res.status(400).json({ message: "Car Not Available" });
     }
     console.log(car);
     car.carStatus = "Not Available";

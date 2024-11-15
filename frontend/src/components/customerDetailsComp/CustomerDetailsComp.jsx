@@ -15,6 +15,7 @@ import { motion } from "framer-motion";
 
 import Link from "next/link";
 import Header from "../Header";
+import Layout from "../Layout";
 
 const CustomerDetails = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -105,7 +106,7 @@ const CustomerDetails = () => {
   }
 
   return (
-    <>
+    <Layout>
       <div className="flex-1 overflow-auto relative z-10">
         <Header title="Customers Section" />
 
@@ -229,7 +230,7 @@ const CustomerDetails = () => {
                           <button
                             className="text-indigo-400 hover:text-indigo-300 mr-2"
                             onClick={() => handleEditClick(customer._id)}
-                            >
+                          >
                             <FaEdit size={18} />
                           </button>
                           <button
@@ -298,7 +299,7 @@ const CustomerDetails = () => {
           </motion.div>
         </main>
       </div>
-    </>
+    </Layout>
   );
 };
 

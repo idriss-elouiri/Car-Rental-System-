@@ -1,5 +1,5 @@
-import EditCarComp from "@/components/carDetailsComp/EditCarComp";
 import React from "react";
+import EditCarComp from "@/components/carDetailsComp/EditCarComp";
 
 const EditCar = ({ params }) => {
   const { id } = params;

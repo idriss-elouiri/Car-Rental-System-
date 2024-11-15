@@ -1,11 +1,8 @@
-import Layout from '@/components/Layout'
-import TransactionDataComp from '@/components/transactionDataComp/TransactionDataComp'
-import React from 'react'
+import React from "react";
+import TransactionDataComp from "@/components/transactionDataComp/TransactionDataComp";
 
 const TransactionData = () => {
-  return (
-    <Layout><TransactionDataComp/></Layout>
-  )
-}
+  return <TransactionDataComp />;
+};
 
-export default TransactionData
+export default TransactionData;

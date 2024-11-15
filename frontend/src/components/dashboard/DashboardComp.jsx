@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import Header from "../Header";
 import SalesOverview from "./SalesOverviewChart";
 import SalesChannelChart from "./SalesChannelChart";
+import Layout from "../Layout";
 
 const DashboardComp = () => {
   const [totals, setTotals] = useState({
@@ -59,7 +60,7 @@ const DashboardComp = () => {
             availableCars: carsData.availableCars,
             totalCars: carsData.totalCars,
           }));
-          setCarData(carsData.cars)
+          setCarData(carsData.cars);
           setLatestCars(carsData.cars.slice(-3));
         }
         if (transactionsRes.ok) {
@@ -91,38 +92,40 @@ const DashboardComp = () => {
     fetchData();
   }, [apiUrl]);
   return (
-    <div className="flex-1 overflow-auto relative z-10">
-      <Header title="Overview" />
+    <Layout>
+      <div className="flex-1 overflow-auto relative z-10">
+        <Header title="Overview" />
 
-      <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
-        {/* STATS */}
-        <motion.div
-          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          {" "}
-          <HeroSection
-            totalCustomers={totals.customers}
-            totalCars={totals.totalCars}
-            availableCars={totals.availableCars}
-            completedRentals={totals.completedRentals}
-            transactions={totals.transactions}
+        <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
+          {/* STATS */}
+          <motion.div
+            className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            {" "}
+            <HeroSection
+              totalCustomers={totals.customers}
+              totalCars={totals.totalCars}
+              availableCars={totals.availableCars}
+              completedRentals={totals.completedRentals}
+              transactions={totals.transactions}
+            />
+          </motion.div>
+          <MainSection
+            latestCars={latestCars}
+            latestCustomers={latestCustomers}
           />
-        </motion.div>
-        <MainSection
-          latestCars={latestCars}
-          latestCustomers={latestCustomers}
-        />
-        {/* CHARTS */}
-        <div className="grid grid-cols-1  gap-8">
-          <SalesOverview />
-          <SalesChannelChart carsData={carData} />
-        </div>
-        <RecentTransactions transactions={transactions} />
-      </main>
-    </div>
+          {/* CHARTS */}
+          <div className="grid grid-cols-1  gap-8">
+            <SalesOverview />
+            <SalesChannelChart carsData={carData} />
+          </div>
+          <RecentTransactions transactions={transactions} />
+        </main>
+      </div>
+    </Layout>
   );
 };
 

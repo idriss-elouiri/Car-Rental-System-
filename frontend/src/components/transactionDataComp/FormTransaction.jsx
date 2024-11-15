@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Layout from "../Layout";
 
 const FormTransaction = ({
   _id,
@@ -30,7 +31,7 @@ const FormTransaction = ({
     totalPenalty: "",
     isCompleted: existingIsCompleted || false,
   });
-  console.log(formData)
+  console.log(formData);
   const router = useRouter();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   console.log(formData);
@@ -183,158 +184,160 @@ const FormTransaction = ({
     }
   };
   return (
-    <div className="min-h-screen bg-gray-900 p-8 ">
-      <div className="w-full max-w-2xl mx-auto bg-gray-800 shadow-lg rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-white mb-4">New Transaction</h2>
+      <div className="min-h-screen bg-gray-900 p-8 ">
+        <div className="w-full max-w-2xl mx-auto bg-gray-800 shadow-lg rounded-lg p-6">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            New Transaction
+          </h2>
 
-        {/* Transaction Form */}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label
-              htmlFor="customerName"
-              className="block text-sm font-medium text-white"
-            >
-              Customer Name
-            </label>
-            <select
-              id="customerName"
-              value={formData.customerName}
-              onChange={handleCustomerChange}
-              className="bg-gray-700 text-gray-400 placeholder-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            >
-              <option value="">Select Customer</option>
-              {customers.map((customer) => (
-                <option key={customer._id} value={customer.fullName}>
-                  {customer.fullName}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="carName"
-              className="block text-sm font-medium text-white"
-            >
-              Car Name
-            </label>
-            <select
-              id="carName"
-              value={formData.carName}
-              onChange={handleCarChange}
-              className="bg-gray-700 text-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            >
-              <option value="">Select Car</option>
-              {cars.map((car) => (
-                <option key={car._id} value={car.name}>
-                  {car.name} -{" "}
-                  {car.carStatus === "Available"
-                    ? "Available"
-                    : "Not Available"}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="borrowDate" className="block text-white">
-              Borrow Date
-            </label>
-            <input
-              type="date"
-              id="borrowDate"
-              value={formData.borrowDate}
-              onChange={handleInputChange}
-              className="bg-gray-700 text-gray-400 placeholder-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="returnDate" className="block text-white">
-              Return Date
-            </label>
-            <input
-              type="date"
-              id="returnDate"
-              value={formData.returnDate}
-              onChange={handleInputChange}
-              className="bg-gray-700 text-gray-400 placeholder-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="perDayPrice" className="block text-white">
-              Price per Day
-            </label>
-            <input
-              type="number"
-              id="perDayPrice"
-              value={formData.perDayPrice}
-              onChange={handleInputChange}
-              onBlur={calculateTotalPrice}
-              className="bg-gray-700 text-gray-400 placeholder-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter price per day"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="totalPrice" className="block text-white">
-              Total Price
-            </label>
-            <input
-              type="text"
-              id="totalPrice"
-              value={`$${formData.totalPrice}`}
-              disabled
-              className="bg-gray-700 text-gray-400 placeholder-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          {_id ? (
+          {/* Transaction Form */}
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="dateOfReturn" className="block text-white">
-                Date Of Return
+              <label
+                htmlFor="customerName"
+                className="block text-sm font-medium text-white"
+              >
+                Customer Name
+              </label>
+              <select
+                id="customerName"
+                value={formData.customerName}
+                onChange={handleCustomerChange}
+                className="bg-gray-700 text-gray-400 placeholder-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="">Select Customer</option>
+                {customers.map((customer) => (
+                  <option key={customer._id} value={customer.fullName}>
+                    {customer.fullName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="carName"
+                className="block text-sm font-medium text-white"
+              >
+                Car Name
+              </label>
+              <select
+                id="carName"
+                value={formData.carName}
+                onChange={handleCarChange}
+                className="bg-gray-700 text-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="">Select Car</option>
+                {cars.map((car) => (
+                  <option key={car._id} value={car.name}>
+                    {car.name} -{" "}
+                    {car.carStatus === "Available"
+                      ? "Available"
+                      : "Not Available"}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="borrowDate" className="block text-white">
+                Borrow Date
               </label>
               <input
                 type="date"
-                id="dateOfReturn"
-                value={formData.dateOfReturn}
+                id="borrowDate"
+                value={formData.borrowDate}
                 onChange={handleInputChange}
-                onBlur={calculateTotalPenalty}
                 className="bg-gray-700 text-gray-400 placeholder-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
-          ) : (
-            ""
-          )}
-          {/* Checkbox Field */}
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id="isCompleted"
-              checked={formData.isCompleted}
-              onChange={handleInputChange}
-              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-700 bg-gray-700   rounded"
-            />
-            <label htmlFor="isCompleted" className="text-sm text-white">
-              Is Completed
-            </label>
-          </div>
-          {error && <p style={{ color: "red" }}>{error}</p>}
 
-          {/* Save Button */}
-          <div className="mb-4 flex justify-center">
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200 mt-5"
-            >
-              Save Transaction
-            </button>
-          </div>
-        </form>
+            <div className="mb-4">
+              <label htmlFor="returnDate" className="block text-white">
+                Return Date
+              </label>
+              <input
+                type="date"
+                id="returnDate"
+                value={formData.returnDate}
+                onChange={handleInputChange}
+                className="bg-gray-700 text-gray-400 placeholder-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="perDayPrice" className="block text-white">
+                Price per Day
+              </label>
+              <input
+                type="number"
+                id="perDayPrice"
+                value={formData.perDayPrice}
+                onChange={handleInputChange}
+                onBlur={calculateTotalPrice}
+                className="bg-gray-700 text-gray-400 placeholder-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter price per day"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="totalPrice" className="block text-white">
+                Total Price
+              </label>
+              <input
+                type="text"
+                id="totalPrice"
+                value={`$${formData.totalPrice}`}
+                disabled
+                className="bg-gray-700 text-gray-400 placeholder-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            {_id ? (
+              <div className="mb-4">
+                <label htmlFor="dateOfReturn" className="block text-white">
+                  Date Of Return
+                </label>
+                <input
+                  type="date"
+                  id="dateOfReturn"
+                  value={formData.dateOfReturn}
+                  onChange={handleInputChange}
+                  onBlur={calculateTotalPenalty}
+                  className="bg-gray-700 text-gray-400 placeholder-gray-400 rounded-lg  w-full mt-2 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+            ) : (
+              ""
+            )}
+            {/* Checkbox Field */}
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="isCompleted"
+                checked={formData.isCompleted}
+                onChange={handleInputChange}
+                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-700 bg-gray-700   rounded"
+              />
+              <label htmlFor="isCompleted" className="text-sm text-white">
+                Is Completed
+              </label>
+            </div>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+
+            {/* Save Button */}
+            <div className="mb-4 flex justify-center">
+              <button
+                type="submit"
+                className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200 mt-5"
+              >
+                Save Transaction
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
   );
 };
 

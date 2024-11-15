@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa";
 import Link from "next/link";
 import Header from "../Header";
+import Layout from "../Layout";
 
 const TransactionDataComp = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -103,7 +104,7 @@ const TransactionDataComp = () => {
     return <div className="text-center">Loading transactions...</div>;
   }
   return (
-    <>
+    <Layout>
       <div className="flex-1 overflow-auto relative z-10">
         <Header title="Rentals" />
 
@@ -323,7 +324,7 @@ const TransactionDataComp = () => {
           </motion.div>
         </main>
       </div>
-    </>
+    </Layout>
   );
 };
 

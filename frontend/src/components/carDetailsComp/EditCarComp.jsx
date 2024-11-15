@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import FormCar from "./FormCar"; // Assuming this is your car form component
+import Layout from "../Layout";
 
-const EditCarComp = ({id}) => {
+const EditCarComp = ({ id }) => {
   const [editCar, setEditCar] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -55,9 +56,9 @@ const EditCarComp = ({id}) => {
   }
 
   return editCar ? (
-    <FormCar {...editCar} /> // Assuming FormCar is set up to handle these props
+      <FormCar {...editCar} />
   ) : (
-    <p className="text-center">No car data available</p> // In case the car with the given ID doesn't exist
+    <p className="text-center">No car data available</p>
   );
 };
 
