@@ -54,3 +54,12 @@ app.use((err, req, res, next) => {
     message,
   });
 });
+const shutdown = () => {
+  server.close(() => {
+    console.log("Server closed");
+    process.exit(0);
+  });
+};
+
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);
