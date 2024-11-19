@@ -10,7 +10,6 @@ import transactionRouter from "./modules/transaction/transaction.route.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
-const port = process.env.PORT || 3006;
 const app = express();
 dotenv.config();
 
@@ -37,6 +36,7 @@ app.get("/*", (req, res) => {
   res.json("hello world");
 });
 
+const port = process.env.PORT || 3006;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}!`);
 });
