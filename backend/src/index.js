@@ -1,19 +1,23 @@
 import express from "express";
 import cors from "cors";
 import { connectDb } from "./config/db.js";
-import authRouter from "./modules/auth/auth.route.js";
+import adminAuthRouter from "./modules/adminAuth/adminAuth.route.js";
+import adminUserRouter from "./modules/userAdmin/userAdmin.route.js";
+import staffRouter from "./modules/staffAuth/staffAuth.route.js";
 import customerRouter from "./modules/customer/customer.route.js";
 import carRouter from "./modules/car/car.route.js";
 import transactionRouter from "./modules/transaction/transaction.route.js";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
-const port = process.env.PORT || 3006
+const port = process.env.PORT || 3006;
 const app = express();
 dotenv.config();
 
 connectDb();
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.FRONTEND_URL, // Your frontend origin
@@ -22,8 +26,9 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
-app.use("/api/auth", authRouter);
+app.use("/api/staff", staffRouter);
+app.use("/api/adminAuth", adminAuthRouter);
+app.use("/api/adminUser", adminUserRouter);
 app.use("/api/customer", customerRouter);
 app.use("/api/car", carRouter);
 app.use("/api/transaction", transactionRouter);

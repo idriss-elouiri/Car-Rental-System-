@@ -18,6 +18,10 @@ const customerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    customerImageCard: {
+      type: String,
+      required: true,
+    },
     mobile: {
       type: String,
       required: true,
