@@ -1,42 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import { motion } from "framer-motion";
 
 const SalesOverview = () => {
   const [salesData, setSalesData] = useState([]);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
+  // Récupérer les données de vente depuis l'API
   useEffect(() => {
     const fetchSalesData = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/transaction/sales-overview`);
+        const response = await fetch(
+          `${apiUrl}/api/transaction/sales-overview`
+        );
         const data = await response.json();
-        
-        // Transform data to include name, sales, and date
-        const formattedData = data.monthlyOverview.map(item => ({
-          name: item.monthName, // e.g., "November"
-          sales: item.totalRevenue, // total revenue for the month
-          date: item.date // formatted date, e.g., "11/8/2024"
+
+        // Transformer les données pour inclure le nom du mois, le revenu total et la date
+        const formattedData = data.monthlyOverview.map((item) => ({
+          name: item.monthName, // Ex : "Novembre"
+          sales: item.totalRevenue, // Revenu total pour le mois
+          date: item.date, // Date formatée, ex : "11/8/2024"
         }));
-        
+
         setSalesData(formattedData);
       } catch (error) {
-        console.error("Error fetching sales data:", error);
+        console.error(
+          "Erreur lors de la récupération des données de vente :",
+          error
+        );
       }
     };
 
     fetchSalesData();
   }, [apiUrl]);
 
-  // Custom tooltip to display monthName, totalRevenue, and date
+  // Tooltip personnalisé pour afficher le mois, le revenu total et la date
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const { name, sales, date } = payload[0].payload;
       return (
         <div className="bg-gray-700 p-2 rounded shadow-lg">
           <p className="text-gray-300">{name}</p>
-          <p className="text-gray-200">Revenue: ${sales.toLocaleString()}</p>
-          <p className="text-gray-400">Date: {date}</p>
+          <p className="text-gray-200">Revenu : ${sales.toLocaleString()}</p>
+          <p className="text-gray-400">Date : {date}</p>
         </div>
       );
     }
@@ -50,7 +64,9 @@ const SalesOverview = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
     >
-      <h2 className="text-lg font-medium mb-4 text-gray-100">Sales Overview</h2>
+      <h2 className="text-lg font-medium mb-4 text-gray-100">
+        Aperçu des Ventes
+      </h2>
 
       <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">

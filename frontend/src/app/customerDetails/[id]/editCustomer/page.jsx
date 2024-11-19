@@ -1,5 +1,7 @@
-import React from "react";
-import EditCustomerComp from "@/components/customerDetailsComp/EditCustomerComp";
+import dynamic from "next/dynamic";
+const EditCustomerComp = dynamic(() =>
+  import("@/components/customerDetailsComp/EditCustomerComp")
+);
 
 const EditCustomer = ({ params }) => {
   const { id } = params;

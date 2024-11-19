@@ -8,8 +8,10 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Header from "../Header";
 import Layout from "../Layout";
+import { useSelector } from "react-redux";
 
 const CarDetailsComp = () => {
+  const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState("");
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,6 +20,8 @@ const CarDetailsComp = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [carIdToDelete, setCarIdToDelete] = useState("");
   const [loading, setLoading] = useState(true); // Loading state
+  const isAdmin = currentUser?.isAdmin;
+  const isStaff = currentUser?.isStaff;
   const router = useRouter();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -62,10 +66,6 @@ const CarDetailsComp = () => {
     }
   };
 
-  const handleEditClick = (id) => {
-    router.push(`/carDetails/${id}/editCar`);
-  };
-  console.log(cars);
   // Filter data based on the search term
   const filteredData = cars?.filter(
     (car) =>
@@ -89,67 +89,61 @@ const CarDetailsComp = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const handlePrevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
-  if (loading) {
-    return <div className="text-center">Loading Cars...</div>; // Loading state UI
-  }
-
   return (
     <Layout>
-      <div className="flex-1 overflow-auto relative z-10">
-        <Header title="Car Section" />
-
-        <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
-          <motion.div
-            className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <div className="flex justify-between items-center w-full mb-2">
-              <h2 className="text-xl font-semibold text-gray-100">
-                Rental Car Details
-              </h2>
-
-              <Link
-                href="/carDetails/newCar"
-                className="mb-4 inline-flex items-center px-4 py-2 border border-green-500 text-green-500 rounded-md hover:bg-green-500 hover:text-white"
-              >
-                + Add New Car
-              </Link>
+    <div className="flex-1 overflow-auto relative z-10">
+      <Header title="Section Voitures" />
+  
+      <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
+        <motion.div
+          className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <div className="flex justify-between items-center w-full mb-2">
+            <h2 className="text-xl font-semibold text-gray-100">
+              Détails de la voiture de location
+            </h2>
+  
+            <Link
+              href="/carDetails/newCar"
+              className="mb-4 inline-flex items-center px-4 py-2 border border-green-500 text-green-500 rounded-md hover:bg-green-500 hover:text-white"
+            >
+              + Ajouter une nouvelle voiture
+            </Link>
+          </div>
+          <div className="flex justify-between items-center mb-6">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Rechercher des voitures..."
+                className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={handleSearchChange}
+                value={searchTerm}
+              />
+              <FaSearch
+                className="absolute left-3 top-2.5 text-gray-400"
+                size={18}
+              />
             </div>
-            <div className="flex justify-between items-center mb-6">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search cars..."
-                  className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  onChange={handleSearchChange}
-                  value={searchTerm}
-                />
-                <FaSearch
-                  className="absolute left-3 top-2.5 text-gray-400"
-                  size={18}
-                />
-              </div>
-              <select
-                value={entriesPerPage}
-                onChange={handleEntriesChange}
-                className="bg-gray-700 text-white placeholder-gray-400 rounded-lg  pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {[10, 20, 30].map((value) => (
-                  <option key={value} value={value}>
-                    Show {value} entries
-                  </option>
-                ))}
-              </select>
-            </div>
-            {loading ? (
-              <p>Loading customers...</p>
-            ) : errorMessage ? (
-              <p className="text-red-600">{errorMessage}</p>
-            ) : (
-              ""
-            )}
+            <select
+              value={entriesPerPage}
+              onChange={handleEntriesChange}
+              className="bg-gray-700 text-white placeholder-gray-400 rounded-lg pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              {[10, 20, 30].map((value) => (
+                <option key={value} value={value}>
+                  Afficher {value} entrées
+                </option>
+              ))}
+            </select>
+          </div>
+          {loading ? (
+            <p>Chargement des voitures...</p>
+          ) : errorMessage ? (
+            <p className="text-red-600">{errorMessage}</p>
+          ) : isAdmin || isStaff ? (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-700">
                 <thead>
@@ -158,24 +152,27 @@ const CarDetailsComp = () => {
                       #
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Name
+                      Image de la voiture
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Number
+                      Nom
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Color
+                      Numéro
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Production Year
+                      Couleur
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Status
+                      Année de production
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                      Statut
                     </th>
                     <th className="px-4 py-2 text-center">Actions</th>
                   </tr>
                 </thead>
-
+  
                 <tbody className="divide-y divide-gray-700">
                   {currentData.map((car, index) => (
                     <motion.tr
@@ -186,6 +183,9 @@ const CarDetailsComp = () => {
                     >
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                         {startIndex + index + 1}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                        <img className="w-10 h-10" src={car.carImage} alt={car.name} />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                         {car.name}
@@ -206,7 +206,9 @@ const CarDetailsComp = () => {
                         <>
                           <button
                             className="text-indigo-400 hover:text-indigo-300 mr-2"
-                            onClick={() => handleEditClick(car._id)}
+                            onClick={() =>
+                              router.push(`/carDetails/${car._id}/editCar`)
+                            }
                           >
                             <FaEdit size={18} />
                           </button>
@@ -227,9 +229,9 @@ const CarDetailsComp = () => {
               </table>
               <div className="flex justify-between items-center mt-4">
                 <p>
-                  Showing {startIndex + 1} to{" "}
+                  Affichage de {startIndex + 1} à{" "}
                   {Math.min(startIndex + entriesPerPage, filteredData.length)}{" "}
-                  of {filteredData.length} entries
+                  sur {filteredData.length} entrées
                 </p>
                 <div className="flex gap-2">
                   <button
@@ -237,46 +239,52 @@ const CarDetailsComp = () => {
                     disabled={currentPage === 1}
                     className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
                   >
-                    Prev
+                    Précédent
                   </button>
                   <button
                     onClick={handleNextPage}
                     disabled={currentPage === totalPages}
                     className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
                   >
-                    Next
+                    Suivant
                   </button>
                 </div>
               </div>
               {showModal && (
-                <div className="fixed  inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+                <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
                   <div className="bg-white rounded-md p-6 max-w-md w-full">
                     <HiOutlineExclamationCircle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
                     <h3 className="text-lg text-center text-gray-700">
-                      Are you sure you want to delete this car?
+                      Êtes-vous sûr de vouloir supprimer cette voiture ?
                     </h3>
                     <div className="mt-6 flex justify-center gap-4">
                       <button
                         onClick={() => handleDeleteCar(carIdToDelete)}
                         className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                       >
-                        Yes, I'm sure
+                        Oui, je suis sûr
                       </button>
                       <button
                         onClick={() => setShowModal(false)}
                         className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
                       >
-                        No, cancel
+                        Non, annuler
                       </button>
                     </div>
                   </div>
                 </div>
               )}
             </div>
-          </motion.div>
-        </main>
-      </div>
-    </Layout>
+          ) : (
+            <p className="text-gray-500 text-center mt-4">
+              Vous n'avez pas encore de voitures !
+            </p>
+          )}
+        </motion.div>
+      </main>
+    </div>
+  </Layout>
+  
   );
 };
 

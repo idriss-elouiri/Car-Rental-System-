@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  FaCar,
-  FaCheckDouble,
-  FaMoneyBill,
-  FaUsers,
-} from "react-icons/fa";
+import { FaCar, FaCheckDouble, FaMoneyBill, FaUsers } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 const HeroSection = ({
@@ -26,7 +21,7 @@ const HeroSection = ({
         <div className="px-4 py-5 sm:p-6">
           <span className="flex items-center text-sm font-medium text-gray-400">
             <FaCar size={20} className="mr-2" style={{ color: "#6366F1" }} />
-            Available Cars
+            Voitures disponibles{" "}
           </span>
           <p className="mt-1 text-3xl font-semibold text-gray-100">
             {availableCars}/{totalCars}
@@ -43,7 +38,7 @@ const HeroSection = ({
         <div className="px-4 py-5 sm:p-6">
           <span className="flex items-center text-sm font-medium text-gray-400">
             <FaUsers size={20} className="mr-2" style={{ color: "#8B5CF6" }} />
-            Customers
+            Clients{" "}
           </span>
           <p className="mt-1 text-3xl font-semibold text-gray-100">
             {totalCustomers}
@@ -67,7 +62,7 @@ const HeroSection = ({
             Transactions
           </span>
           <p className="mt-1 text-3xl font-semibold text-gray-100">
-            {transactions}
+            ${transactions}
           </p>
         </div>
       </motion.div>
@@ -85,7 +80,7 @@ const HeroSection = ({
               className="mr-2"
               style={{ color: "#EC4899" }}
             />
-            Completed Rentals
+            Locations terminées
           </span>
           <p className="mt-1 text-3xl font-semibold text-gray-100">
             {completedRentals}

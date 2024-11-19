@@ -1,5 +1,7 @@
-import React from "react";
-import DashboardComp from "@/components/dashboard/DashboardComp";
+import dynamic from "next/dynamic";
+const DashboardComp = dynamic(() =>
+  import("@/components/dashboard/DashboardComp")
+);
 
 const Dashboard = () => {
   return <DashboardComp />;

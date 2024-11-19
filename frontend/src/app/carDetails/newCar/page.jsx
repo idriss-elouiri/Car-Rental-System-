@@ -1,5 +1,5 @@
-import React from "react";
-import FormCar from "@/components/carDetailsComp/FormCar";
+import dynamic from "next/dynamic";
+const FormCar = dynamic(() => import("@/components/carDetailsComp/FormCar"));
 
 const NewCar = () => {
   return <FormCar />;

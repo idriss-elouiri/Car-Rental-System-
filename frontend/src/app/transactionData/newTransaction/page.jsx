@@ -1,5 +1,7 @@
-import React from "react";
-import FormTransaction from "@/components/transactionDataComp/FormTransaction";
+import dynamic from "next/dynamic";
+const FormTransaction = dynamic(() =>
+  import("@/components/transactionDataComp/FormTransaction")
+);
 
 const newTransaction = () => {
   return <FormTransaction />;

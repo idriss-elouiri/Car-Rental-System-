@@ -25,6 +25,7 @@ const DashboardComp = () => {
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
+  // Récupérer les données via l'API
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,12 +48,13 @@ const DashboardComp = () => {
         const carsData = await carsRes.json();
         const transactionsData = await transactionsRes.json();
 
+        // Mise à jour des états avec les données récupérées
         if (customersRes.ok) {
           setTotals((prev) => ({
             ...prev,
             customers: customersData.totalCustomers,
           }));
-          setLatestCustomers(customersData.customers.slice(-3));
+          setLatestCustomers(customersData.customers.slice(-3)); // Derniers clients
         }
         if (carsRes.ok) {
           setTotals((prev) => ({
@@ -61,19 +63,19 @@ const DashboardComp = () => {
             totalCars: carsData.totalCars,
           }));
           setCarData(carsData.cars);
-          setLatestCars(carsData.cars.slice(-3));
+          setLatestCars(carsData.cars.slice(-3)); // Dernières voitures
         }
         if (transactionsRes.ok) {
           setTransactions(transactionsData.transactions);
 
-          // Calculate the total sales
+          // Calcul des ventes totales
           const totalSales = transactionsData.transactions.reduce(
             (acc, transaction) =>
               acc + transaction.totalPrice + transaction.totalPenalty,
             0
           );
 
-          // Count completed rentals
+          // Comptage des locations terminées
           const completedRentalsCount = transactionsData.transactions.filter(
             (transaction) => transaction.isCompleted
           ).length;
@@ -85,26 +87,29 @@ const DashboardComp = () => {
           }));
         }
       } catch (error) {
-        console.log("Error fetching data: ", error.message);
+        console.log(
+          "Erreur lors de la récupération des données: ",
+          error.message
+        );
       }
     };
 
     fetchData();
   }, [apiUrl]);
+
   return (
     <Layout>
       <div className="flex-1 overflow-auto relative z-10">
-        <Header title="Overview" />
+        <Header title="Vue d'ensemble" />
 
         <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
-          {/* STATS */}
+          {/* STATISTIQUES */}
           <motion.div
             className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            {" "}
             <HeroSection
               totalCustomers={totals.customers}
               totalCars={totals.totalCars}
@@ -113,15 +118,19 @@ const DashboardComp = () => {
               transactions={totals.transactions}
             />
           </motion.div>
+
           <MainSection
             latestCars={latestCars}
             latestCustomers={latestCustomers}
           />
-          {/* CHARTS */}
-          <div className="grid grid-cols-1  gap-8">
+
+          {/* GRAPHIQUES */}
+          <div className="grid grid-cols-1 gap-8">
             <SalesOverview />
             <SalesChannelChart carsData={carData} />
           </div>
+
+          {/* TRANSACTIONS RÉCENTES */}
           <RecentTransactions transactions={transactions} />
         </main>
       </div>

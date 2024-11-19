@@ -1,6 +1,7 @@
-import React from "react";
-import EditCarComp from "@/components/carDetailsComp/EditCarComp";
-
+import dynamic from "next/dynamic";
+const EditCarComp = dynamic(() =>
+  import("@/components/carDetailsComp/EditCarComp")
+);
 const EditCar = ({ params }) => {
   const { id } = params;
   return (

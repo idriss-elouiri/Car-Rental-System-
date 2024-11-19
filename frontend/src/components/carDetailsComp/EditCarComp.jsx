@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Always at the top
 
 import React, { useEffect, useState } from "react";
 import FormCar from "./FormCar"; // Assuming this is your car form component
@@ -11,13 +11,15 @@ const EditCarComp = ({ id }) => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    const getEditCar = async () => {
+    const fetchEditCar = async () => {
       try {
         const res = await fetch(`${apiUrl}/api/car/${id}`);
         const data = await res.json();
 
         if (!res.ok) {
-          throw new Error(data.message || "Failed to fetch editCar data");
+          throw new Error(
+            data.message || "Impossible de récupérer les données de la voiture"
+          );
         }
 
         setEditCar(data);
@@ -29,36 +31,42 @@ const EditCarComp = ({ id }) => {
     };
 
     if (id) {
-      getEditCar();
+      fetchEditCar();
     }
   }, [id, apiUrl]);
 
   if (loading) {
     return (
-      <div className="text-center">
-        <p>Loading...</p>
+      <div className="flex items-center justify-center h-full py-10">
+        <p className="text-gray-600 font-medium text-lg">
+          Chargement en cours...
+        </p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-red-500 text-center">
-        <p>Error: {error}</p>
+      <div className="flex flex-col items-center justify-center space-y-4 p-6 text-center">
+        <p className="text-red-500 font-semibold text-lg">Erreur : {error}</p>
         <button
           onClick={() => setError(null)}
-          className="bg-indigo-600 text-white px-4 py-2 rounded"
+          className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-800 transition duration-300"
         >
-          Retry
+          Réessayer
         </button>
       </div>
     );
   }
 
   return editCar ? (
-      <FormCar {...editCar} />
+    <FormCar {...editCar} />
   ) : (
-    <p className="text-center">No car data available</p>
+    <div className="flex items-center justify-center h-full py-10">
+      <p className="text-gray-700 font-medium text-lg">
+        Aucune donnée de voiture disponible.
+      </p>
+    </div>
   );
 };
 

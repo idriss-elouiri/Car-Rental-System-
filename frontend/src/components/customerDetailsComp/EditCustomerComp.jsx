@@ -1,4 +1,4 @@
-"use client"; // Move this to the very top
+"use client"; // Always at the top
 
 import React, { useEffect, useState } from "react";
 import FormCustomer from "./FormCustomer";
@@ -11,13 +11,15 @@ const EditCustomerComp = ({ id }) => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    const getEditCustomer = async () => {
+    const fetchEditCustomer = async () => {
       try {
         const res = await fetch(`${apiUrl}/api/customer/${id}`);
         const data = await res.json();
 
         if (!res.ok) {
-          throw new Error(data.message || "Failed to fetch editCustomer data");
+          throw new Error(
+            data.message || "Impossible de récupérer les données du client"
+          );
         }
 
         setEditCustomer(data);
@@ -29,28 +31,38 @@ const EditCustomerComp = ({ id }) => {
     };
 
     if (id) {
-      getEditCustomer();
+      fetchEditCustomer();
     }
   }, [id, apiUrl]);
 
-  if (loading) return <p className="text-center">Loading...</p>;
-  if (error)
+  if (loading) {
     return (
-      <div className="text-red-500 text-center">
-        <p>Error: {error}</p>
+      <p className="text-center text-gray-600 font-medium">
+        Chargement en cours...
+      </p>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-red-500 text-center flex flex-col items-center space-y-4 p-4">
+        <p className="text-lg font-semibold">Erreur : {error}</p>
         <button
           onClick={() => setError(null)}
-          className="bg-indigo-600 text-white px-4 py-2 rounded"
+          className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-800 transition duration-300"
         >
-          Retry
+          Réessayer
         </button>
       </div>
     );
+  }
 
   return editCustomer ? (
     <FormCustomer {...editCustomer} />
   ) : (
-    <p className="text-center">No editCustomer data available</p>
+    <p className="text-center text-gray-700 font-medium text-lg mt-6">
+      Aucune donnée de client à modifier n'est disponible.
+    </p>
   );
 };
 

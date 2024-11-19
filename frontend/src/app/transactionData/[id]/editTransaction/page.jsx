@@ -1,5 +1,7 @@
-import React from "react";
-import EditTransactionComp from "@/components/transactionDataComp/EditTransactionComp";
+import dynamic from "next/dynamic";
+const EditTransactionComp = dynamic(() =>
+  import("@/components/transactionDataComp/EditTransactionComp")
+);
 
 const EditTransaction = ({ params }) => {
   const { id } = params;

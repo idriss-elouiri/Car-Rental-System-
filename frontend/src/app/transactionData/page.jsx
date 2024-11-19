@@ -1,5 +1,7 @@
-import React from "react";
-import TransactionDataComp from "@/components/transactionDataComp/TransactionDataComp";
+import dynamic from "next/dynamic";
+const TransactionDataComp = dynamic(() =>
+  import("@/components/transactionDataComp/TransactionDataComp")
+);
 
 const TransactionData = () => {
   return <TransactionDataComp />;

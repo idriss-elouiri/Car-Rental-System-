@@ -1,5 +1,7 @@
-import FormCustomer from "@/components/customerDetailsComp/FormCustomer";
-import React from "react";
+import dynamic from "next/dynamic";
+const FormCustomer = dynamic(() =>
+  import("@/components/customerDetailsComp/FormCustomer")
+);
 
 const NewCustomer = () => {
   return <FormCustomer />;

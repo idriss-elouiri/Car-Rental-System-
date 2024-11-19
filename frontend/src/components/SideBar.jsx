@@ -1,33 +1,61 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaUsers, FaCar, FaBars } from "react-icons/fa";
-import { MdBarChart } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { FaUsers, FaCar, FaBars, FaReceipt } from "react-icons/fa";
+import { MdBarChart, MdPeople } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { AnimatePresence, motion } from "framer-motion";
 
-
-const SIDEBAR_ITEMS = [
-  {
-    name: "Overview",
-    icon: MdBarChart,
-    color: "#6366f1",
-    href: "/dashboard",
-  },
-  {
-    name: "Rentals",
-    icon: FiSettings,
-    color: "#8B5CF6",
-    href: "/transactionData",
-  },
-  { name: "Car Section", icon: FaCar, color: "#EC4899", href: "/carDetails" },
-  {
-    name: "Customers Section",
-    icon: FaUsers,
-    color: "#10B981",
-    href: "/customerDetails",
-  },
-];
 const Sidebar = () => {
+  const { currentUser } = useSelector((state) => state.user);
+  const isAdmin = currentUser?.isAdmin;
+  const isStaff = currentUser?.isStaff;
+
+  const SIDEBAR_ITEMS = [
+    {
+      name: "Overview",
+      icon: MdBarChart,
+      color: "#6366f1",
+      href: "/dashboard",
+      visible: isAdmin || isStaff,
+    },
+    {
+      name: "Rentals",
+      icon: FiSettings,
+      color: "#8B5CF6",
+      href: "/transactionData",
+      visible: isAdmin || isStaff,
+    },
+    {
+      name: "Car Section",
+      icon: FaCar,
+      color: "#EC4899",
+      href: "/carDetails",
+      visible: isAdmin || isStaff,
+    },
+    {
+      name: "Customers Section",
+      icon: FaUsers,
+      color: "#10B981",
+      href: "/customerDetails",
+      visible: isAdmin || isStaff,
+    },
+    {
+      name: "Receipts Section",
+      icon: FaReceipt,
+      color: "#10B981",
+      href: "/receipts",
+      visible: isAdmin || isStaff,
+    },
+    {
+      name: "Staff Section",
+      icon: MdPeople,
+      color: "#10B981",
+      href: "/staff",
+      visible: isAdmin, // Only visible to admins
+    },
+  ].filter((item) => item.visible); // Filter out items not visible to the current user
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
