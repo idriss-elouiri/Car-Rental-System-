@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import FormCar from "./FormCar"; // Assuming this is your car form component
-import Layout from "../Layout";
+import { useParams } from "next/navigation";
 
-const EditCarComp = ({ id }) => {
+const EditCarComp = () => {
+  const { id } = useParams();
   const [editCar, setEditCar] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

@@ -117,7 +117,7 @@ const FormCustomer = ({
       mobile: "",
       idCard: "",
     });
-    router.prefetch("/customerDetails");
+    router.push("/customerDetails");
   };
 
   return (

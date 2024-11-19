@@ -3,10 +3,8 @@ const EditCustomerComp = dynamic(() =>
   import("@/components/customerDetailsComp/EditCustomerComp")
 );
 
-const EditCustomer = ({ params }) => {
-  const { id } = params;
-
-  return <EditCustomerComp id={id} />;
+const EditCustomer = () => {
+  return <EditCustomerComp  />;
 };
 
 export default EditCustomer;

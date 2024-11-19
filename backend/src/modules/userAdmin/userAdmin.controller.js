@@ -4,7 +4,9 @@ import bcryptjs from "bcryptjs";
 import Staff from "../staffAuth/staffAuth.model.js";
 
 export const updateAdmin = async (req, res, next) => {
-  if (req.user.id !== req.params.userId) {
+  console.log(req.params.adminId)
+  console.log(req.user.id)
+  if (req.user.id !== req.params.adminId) {
     return next(errorHandler(403, "You are not allowed to update this user"));
   }
   if (req.body.password) {
@@ -12,7 +14,7 @@ export const updateAdmin = async (req, res, next) => {
   }
   try {
     const updatedAdmin = await Admin.findByIdAndUpdate(
-      req.params.userId,
+      req.params.adminId,
       {
         $set: {
           name: req.body.name,
@@ -31,11 +33,11 @@ export const updateAdmin = async (req, res, next) => {
 };
 
 export const deleteAdmin = async (req, res, next) => {
-  if (req.user.id !== req.params.userId) {
+  if (req.user.id !== req.params.adminId) {
     return next(errorHandler(403, "You are not allowed to delete this user"));
   }
   try {
-    await Admin.findByIdAndDelete(req.params.userId);
+    await Admin.findByIdAndDelete(req.params.adminId);
     res.status(200).json("Admin has been deleted");
   } catch (error) {
     next(error);
@@ -97,7 +99,7 @@ export const getAdmins = async (req, res, next) => {
 
 export const getAdmin = async (req, res, next) => {
   try {
-    const user = await Admin.findById(req.params.userId);
+    const user = await Admin.findById(req.params.adminId);
     if (!user) {
       return next(errorHandler(404, "Admin not found"));
     }
@@ -112,23 +114,20 @@ export const updateStaff = async (req, res, next) => {
   try {
     const { passwordStaff } = req.body;
 
-    // Hash password only if it's provided
     if (passwordStaff) {
       req.body.passwordStaff = bcryptjs.hashSync(passwordStaff, 10);
     }
 
     const updatedStaff = await Staff.findByIdAndUpdate(
       req.params.staffId,
-      { $set: { ...req.body } }, // Use spread operator to update all fields
+      { $set: { ...req.body } },
       { new: true }
     );
 
-    // Check if staff was found
     if (!updatedStaff) {
       return next(errorHandler(404, "Staff not found"));
     }
 
-    // Omit password from response
     const { passwordStaff: pass, ...rest } = updatedStaff._doc;
     res.status(200).json(rest);
   } catch (error) {

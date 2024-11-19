@@ -117,7 +117,7 @@ const FormCar = ({
       customerImageCard: "",
       carStatus: "",
     });
-    router.prefetch("/carDetails");
+    router.push("/carDetails");
   };
   return (
     <Layout>

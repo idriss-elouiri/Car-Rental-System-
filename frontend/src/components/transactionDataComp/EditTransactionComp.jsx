@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import FormTransaction from "./FormTransaction";
-import Layout from "../Layout";
+import { useParams } from "next/navigation";
 
-const EditTransactionComp = ({ id }) => {
+const EditTransactionComp = () => {
+  const { id } = useParams();
   const [editTransaction, setEditTransaction] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

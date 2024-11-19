@@ -225,7 +225,7 @@ const TransactionDataComp = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                           {transaction.isCompleted ? (
-                            "Terminé"
+                           <button className="p-2 bg-green-600 rounded-lg">Terminé</button> 
                           ) : (
                             <>
                               <button

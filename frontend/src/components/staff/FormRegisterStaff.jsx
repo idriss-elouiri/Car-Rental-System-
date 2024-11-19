@@ -121,7 +121,6 @@ const FormRegisterStaff = ({
       if (!res.ok) {
         setErrorMessage(data.message || "An error occurred");
       } else {
-        router.prefetch("/staff");
         router.push("/staff");
       }
     } catch (error) {

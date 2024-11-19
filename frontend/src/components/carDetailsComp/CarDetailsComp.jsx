@@ -185,7 +185,7 @@ const CarDetailsComp = () => {
                         {startIndex + index + 1}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                        <img className="w-10 h-10" src={car.carImage} alt={car.name} />
+                        <img className="w-30 h-20 rounded" src={car.carImage} alt={car.name} />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                         {car.name}

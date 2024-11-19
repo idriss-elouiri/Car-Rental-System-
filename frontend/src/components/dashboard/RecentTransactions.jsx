@@ -122,7 +122,15 @@ const TransactionsRécentes = ({ transactions }) => {
                       {transaction.totalPrice}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                      {transaction.isCompleted ? "Terminé" : "Non terminé"}
+                      {transaction.isCompleted ? (
+                        <button className="p-2 bg-green-600 rounded-lg">
+                          Terminé
+                        </button>
+                      ) : (
+                        <button className="p-2 bg-red-600 rounded-lg">
+                          Non Terminé
+                        </button>
+                      )}
                     </td>
                   </motion.tr>
                 ))}

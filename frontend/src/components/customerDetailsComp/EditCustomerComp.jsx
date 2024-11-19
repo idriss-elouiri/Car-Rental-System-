@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import FormCustomer from "./FormCustomer";
-import Layout from "../Layout";
+import { useParams } from "next/navigation";
 
-const EditCustomerComp = ({ id }) => {
+const EditCustomerComp = () => {
+  const { id } = useParams();
   const [editCustomer, setEditCustomer] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
