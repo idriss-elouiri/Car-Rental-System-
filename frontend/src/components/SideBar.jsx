@@ -13,46 +13,46 @@ const Sidebar = () => {
 
   const SIDEBAR_ITEMS = [
     {
-      name: "Overview",
+      name: "Aperçu",
       icon: MdBarChart,
       color: "#6366f1",
       href: "/dashboard",
       visible: isAdmin || isStaff,
     },
     {
-      name: "Rentals",
+      name: "Locations",
       icon: FiSettings,
       color: "#8B5CF6",
       href: "/transactionData",
       visible: isAdmin || isStaff,
     },
     {
-      name: "Car Section",
+      name: "Section Voitures",
       icon: FaCar,
       color: "#EC4899",
       href: "/carDetails",
       visible: isAdmin || isStaff,
     },
     {
-      name: "Customers Section",
+      name: "Section Clients",
       icon: FaUsers,
       color: "#10B981",
       href: "/customerDetails",
       visible: isAdmin || isStaff,
     },
     {
-      name: "Receipts Section",
+      name: "Section Reçus",
       icon: FaReceipt,
       color: "#10B981",
       href: "/receipts",
       visible: isAdmin || isStaff,
     },
     {
-      name: "Staff Section",
+      name: "Section Personnel",
       icon: MdPeople,
       color: "#10B981",
       href: "/staff",
-      visible: isAdmin, // Only visible to admins
+      visible: isAdmin, // Visible uniquement pour les administrateurs
     },
   ].filter((item) => item.visible); // Filter out items not visible to the current user
 
