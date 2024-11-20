@@ -48,7 +48,7 @@ const Sidebar = () => {
       visible: isAdmin || isStaff,
     },
     {
-      name: "Section Personnel",
+      name: "Section facteur",
       icon: MdPeople,
       color: "#10B981",
       href: "/staff",
