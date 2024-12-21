@@ -11,7 +11,7 @@ import {
 } from "../../redux/user/userSlice";
 
 export default function AdminLoginComp() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ email: "admin@gmail.com", password: "adminApp" });
   const { loading, error: errorMessage } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -67,7 +67,6 @@ export default function AdminLoginComp() {
               id="email"
               name="email"
               value={formData.email}
-              onChange={handleInputChange}
               className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="Entrez votre adresse e-mail"
               required
@@ -87,7 +86,6 @@ export default function AdminLoginComp() {
               id="password"
               name="password"
               value={formData.password}
-              onChange={handleInputChange}
               className="w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="Entrez votre mot de passe"
               required
